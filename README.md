@@ -1,6 +1,6 @@
-# OpenHD Kernel Library
+# OpenHD Client Core Library (Not Official)
 
-QOpenHD stripped from QT.
+QOpenHD stripped from QT. Remains only the core connectivity layer to the OpenHD Ground station, telemetry and videostream.
 
 This is not an official project.
 
@@ -41,4 +41,5 @@ This will run a simple SDL2 sample, starting telemetry, and displaying the video
 TODO:
 - Test other platform than Linux.
 - Formalize callback mechanisms to connect a UI (callbacks etc)
+
 - Cleaning unnecessary code.
