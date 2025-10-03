@@ -5,12 +5,15 @@
 #include "gl_videorenderer.h"
 #include "../color_helper.h"
 #include <GL/gl.h>
+#include <GL/glext.h> // For extensions, if needed, on Linux/Windows
+#include <EGL/egl.h>
 #include <EGL/eglext.h>
 #include <GLES2/gl2ext.h>
 #include <chrono>
 #include "../avcodec_helper.hpp"
 #include <libavutil/error.h>
 #include <vector>
+#include <iostream>
 
 static EGLint texgen_attrs[] = {
 	EGL_DMA_BUF_PLANE0_FD_EXT,
@@ -46,7 +49,42 @@ static void create_rgba_texture(GLuint& tex_id,uint32_t color_rgba){
   glBindTexture(GL_TEXTURE_2D,0);
 }
 
+// Your callback function for EGL debug messages
+void APIENTRY EGLDebugCallback(EGLenum error, const char *command, EGLint messageType, EGLLabelKHR threadLabel, EGLLabelKHR objectLabel, const char* message) {
+    // Process the debug message here (e.g., print to console)
+    // ...
+    std::cout << "EGL Debug message: " << message << std::endl;
+}
+
+// Function to set up EGL debug output
+void setupEGLDebugOutput() {
+    // Get the extension function pointer
+    PFNEGLDEBUGMESSAGECONTROLKHRPROC eglDebugMessageControlKHR = (PFNEGLDEBUGMESSAGECONTROLKHRPROC)eglGetProcAddress("eglDebugMessageControlKHR");
+
+    if (eglDebugMessageControlKHR) {
+        // Define attributes to enable certain message types
+        const EGLAttrib attrib_list[] = {
+            EGL_DEBUG_MSG_CRITICAL_KHR, EGL_TRUE,
+            EGL_DEBUG_MSG_ERROR_KHR,    EGL_TRUE,
+            EGL_DEBUG_MSG_WARN_KHR,     EGL_TRUE,
+            EGL_NONE
+        };
+
+        // Pass the callback function and the attribute list
+        eglDebugMessageControlKHR(EGLDebugCallback, attrib_list);
+    } else {
+      std::cout << "Unable to setup debug logs for egl" << std::endl;
+      assert(0); 
+    }
+}
+
+
 void GL_VideoRenderer::init_gl() {
+
+  glEnable(GL_DEBUG_OUTPUT);
+  glEnable(GL_DEBUG_OUTPUT_SYNCHRONOUS); 
+  setupEGLDebugOutput();
+
   create_rgba_texture(texture_rgb_green, create_pixel_rgba(0,255,0,255));
   create_rgba_texture(texture_rgb_blue, create_pixel_rgba(0,0,255,255));
   gl_shaders=std::make_unique<GL_shaders>();

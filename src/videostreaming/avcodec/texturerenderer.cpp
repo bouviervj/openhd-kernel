@@ -20,7 +20,7 @@ TextureRenderer &TextureRenderer::instance(){
     return renderer;
 }
 
-void TextureRenderer::initGL(void *window)
+void TextureRenderer::initGL(/*void *window*/)
 {
     if (!initialized) {
         initialized=true;
@@ -35,7 +35,7 @@ void TextureRenderer::initGL(void *window)
     }
 }
 
-void TextureRenderer::paint(void *window,int rotation_degree)
+void TextureRenderer::paint(/*void *window,*/int rotation_degree)
 {
     const auto delta=std::chrono::steady_clock::now()-last_frame;
     last_frame=std::chrono::steady_clock::now();
@@ -47,9 +47,9 @@ void TextureRenderer::paint(void *window,int rotation_degree)
    // Play nice with the RHI. Not strictly needed when the scenegraph uses
    // OpenGL directly.
     // Consti10: comp error, seems to work without, too
-   if(window){
+   //if(window){
        //window->beginExternalCommands();
-   }
+   //}
    if(m_clear_all_video_textures_next_frame){
        remove_queued_frame_if_avalable();
        gl_video_renderer->clean_video_textures_gl();
@@ -93,9 +93,9 @@ void TextureRenderer::paint(void *window,int rotation_degree)
    glEnable(GL_DEPTH_TEST);
    glViewport(0, 0, m_viewportSize.width, m_viewportSize.height);
 
-   if(window){
+   //if(window){
        //window->endExternalCommands();
-   }
+   //}
 }
 
 int TextureRenderer::queue_new_frame_for_display(AVFrame *src_frame)

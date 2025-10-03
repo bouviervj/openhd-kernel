@@ -823,7 +823,7 @@ void AVCodecDecoder::open_and_decode_until_error_custom_rtp(const OpenHDVideoHel
                  std::cout<<"No buff after X seconds."<<std::endl;
                  continue;
              }
-             std::cout<<"Got frame"<<std::endl;
+             //std::cout<<"Got frame"<<std::endl;
              //qDebug()<<"Got decode data (after keyframe)";
              pkt->data=(uint8_t*)buf->get_nal().getData();
              pkt->size=buf->get_nal().getSize();

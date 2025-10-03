@@ -24,10 +24,10 @@ public:
     void setViewportSize(const Size &size) { m_viewportSize = size; }
     // create and link the shaders
     // Provide a handle on from the window system we are working on
-    void initGL(void *window);
+    void initGL(/*void *window*/);
     // draw function
     // @param window: just needed to call the begin/end-externalCommands on it
-    void paint(void *window,int rotation_degree);
+    void paint(/*void *window,*/int rotation_degree);
     // adds a new frame to be picked up by the GL thread
     int queue_new_frame_for_display(AVFrame * src_frame);
     // remoe the currently queued frame if there is one (be carefull to not forget that the
