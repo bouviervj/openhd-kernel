@@ -1,4 +1,4 @@
-# QOpenHD Kernel Library
+# OpenHD Kernel Library
 
 QOpenHD stripped from QT.
 
