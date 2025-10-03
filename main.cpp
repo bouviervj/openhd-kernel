@@ -56,12 +56,6 @@ int main() {
 
     std::cout << "Starting OpenHD connection:" << std::endl;
 
-    MavlinkTelemetry::instance().start();
-
-    auto decoder = AVCodecDecoder();
-
-    decoder.init(true);
-
     // Application loop
     bool running = true;
     SDL_Event event;

@@ -4,6 +4,8 @@
 #include <chrono>
 #include <sstream>
 #include <algorithm>
+#include <vector>
+#include <string>
 #include "mavlink_include.h"
 #include "../settings/Settings.h"
 
