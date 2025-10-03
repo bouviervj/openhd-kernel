@@ -7,6 +7,7 @@
 #include <vector>
 #include <mutex>
 #include <optional>
+#include <string>
 
 #include "../tutil/mavlink_include.h"
 

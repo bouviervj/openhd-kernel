@@ -10,6 +10,7 @@
 #include <algorithm>
 #include <sstream>
 #include <iostream>
+#include <functional>
 #include "StringHelper.hpp"
 
 // This file holds various classes/namespaces usefully for measuring and comparing

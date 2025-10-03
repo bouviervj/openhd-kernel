@@ -5,6 +5,7 @@
 #include <mutex>
 #include <optional>
 #include <vector>
+#include <string>
 
 // Written by telemetry, read by UI
 // This atomic behaviour is enough for us - we signal the ui to rebuild itself every time the data changes

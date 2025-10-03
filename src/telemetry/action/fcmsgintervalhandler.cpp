@@ -5,7 +5,7 @@
 #include "../../logging/hudlogmessagesmodel.h"
 #include "impl/cmdsender.h"
 #include "../MavlinkTelemetry.h"
-#include "../../settings/settings.h"
+#include "../../settings/Settings.h"
 
 FCMsgIntervalHandler &FCMsgIntervalHandler::instance()
 {

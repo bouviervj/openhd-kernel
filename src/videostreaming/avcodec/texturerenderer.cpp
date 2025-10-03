@@ -4,7 +4,7 @@
 #include <cmath>
 #include <algorithm>
 
-#include "../../Settings/Settings.h"
+#include "../../settings/Settings.h"
 #include "../vscommon/decodingstatistcs.h"
 #include "../vscommon/OpenHDVideoHelper.hpp"
 #include "../vscommon/video_ratio_helper.hpp"

@@ -3,6 +3,7 @@
 
 #include <mutex>
 #include <vector>
+#include <string>
 
 class FrequencyHelper
 {
