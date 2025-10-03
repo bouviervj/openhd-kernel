@@ -35,11 +35,10 @@ You need to export `OPENHD_PROPERTIES_PATH` env variable to point to the 'conf' 
 
 ### Run
 
+This will run a simple SDL2 sample, starting telemetry, and displaying the video feed.
 `./buildir/test_rtp`
-
 
 TODO:
 - Test other platform than Linux.
-- WIP - handle a simple example of connecting SDL2 to display the GL buffer.
-- Formalize callback mechanisms to connect a UI
+- Formalize callback mechanisms to connect a UI (callbacks etc)
 - Cleaning unnecessary code.
