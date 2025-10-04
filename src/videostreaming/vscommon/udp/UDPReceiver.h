@@ -3,13 +3,14 @@
 #define FPV_VR_UDPRECEIVER_H
 
 #include <stdio.h>
-#if defined(__linux__) || defined(__macos__)
+#if defined(_WIN32) or defined(__MINGW64__) or defined(__MINGW32__)
+#define WIN32_LEAN_AND_MEAN
+#include <windows.h>
+#include <winsock2.h>
+#include <ws2tcpip.h>
+#else
 #include <sys/socket.h>
 #include <netinet/in.h>
-#else
-#include <winsock2.h>
-#include <Ws2tcpip.h> // For InetPton
-#include <Windows.h>
 #endif
 #include <unistd.h>
 #include <iostream>

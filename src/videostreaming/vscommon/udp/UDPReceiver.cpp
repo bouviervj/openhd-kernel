@@ -2,8 +2,11 @@
 #include "common/StringHelper.hpp"
 #include "common/SchedulingHelper.hpp"
 
-#if defined(_WIN32)
+#if defined(_WIN32) or defined(__MINGW64__) or defined(__MINGW32__)
+#define WIN32_LEAN_AND_MEAN
+#include <windows.h>
 #include <winsock2.h>
+#include <ws2tcpip.h>
 #define SHUT_RD SD_RECEIVE
 #else
 #include <arpa/inet.h>

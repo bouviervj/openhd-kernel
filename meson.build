@@ -13,4 +13,4 @@ subdir('lib/geodesic')
 
 incdir = include_directories('./src', './lib/h264')
 
-executable('test_rtp', './main.cpp', link_with: [settings_lib, openhd_kernel_video_lib, openhd_kernel_telemetry_lib, openhd_kernel_util_lib, logging_lib, h264_lib, geodesic_lib], include_directories: incdir, dependencies: sdl2_dep)
+executable('test_rtp', './main.cpp', link_args: ['-lws2_32'], link_with: [settings_lib, openhd_kernel_video_lib, openhd_kernel_telemetry_lib, openhd_kernel_util_lib, logging_lib, h264_lib, geodesic_lib], include_directories: incdir, dependencies: sdl2_dep)

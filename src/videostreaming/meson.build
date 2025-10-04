@@ -7,6 +7,8 @@ avutil_dep = dependency('libavutil', version : '>=56.70.100')
 # egl_dep = dependency('egl', required: true)
 # opengl_dep = dependency('opengl', required: true)
 
+angleproject_dep = dependency('angleproject', required: true)
+
 openhd_kernel_video_lib = static_library(
   'openhd_kernel_video_lib',
   'avcodec/avcodec_decoder.cpp',
@@ -19,5 +21,5 @@ openhd_kernel_video_lib = static_library(
   'vscommon/decodingstatistcs.cpp',
   include_directories: incdir,
   # dependencies: [avcodec_dep, avformat_dep, avutil_dep, egl_dep, opengl_dep]
-  dependencies: [avcodec_dep, avformat_dep, avutil_dep]
+  dependencies: [avcodec_dep, avformat_dep, avutil_dep, angleproject_dep]
 )

@@ -48,7 +48,7 @@ struct MonitorModeLinkBitfield {
     unsigned int curr_rx_last_packet_status_good:1;
     unsigned int unused:4;
 }
-#ifdef __windows__
+#if defined(_WIN32) or defined(__MINGW64__) or defined(__MINGW32__)
 ;
 #else
 __attribute__ ((packed));
@@ -56,7 +56,7 @@ static_assert(sizeof(MonitorModeLinkBitfield)==1);
 #endif
 static MonitorModeLinkBitfield parse_monitor_link_bitfield(uint8_t bitfield){
     MonitorModeLinkBitfield ret{};
-#ifdef __windows__
+#if defined(_WIN32) or defined(__MINGW64__) or defined(__MINGW32__)
 #else
     std::memcpy((uint8_t*)&ret,&bitfield,1);
 #endif
