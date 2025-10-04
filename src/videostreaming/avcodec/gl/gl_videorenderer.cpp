@@ -300,8 +300,8 @@ bool GL_VideoRenderer::update_texture_egl_external(AVFrame* frame) {
   // I do not know exactly how that works, but we seem to be able to immediately delete the EGL image, as long as we don't give the frame
   // back to the decoder I assume
 #if not ( defined(_WIN32) or defined(__MINGW64__) or defined(__MINGW32__) )
-  eglDestroyImageKHR(egl_display, image);\
-#else 
+  eglDestroyImageKHR(egl_display, image);
+#else
   eglDestroyImage(egl_display, image);
 #endif
   egl_frame_texture.has_valid_image= true;
