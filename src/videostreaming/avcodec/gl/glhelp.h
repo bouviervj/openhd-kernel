@@ -19,7 +19,7 @@ extern "C" {
 /// I think you could get these from other places like GLAD or libepoxy.
 ///
 
-#ifndef __windows__
+#if not ( defined(_WIN32) or defined(__MINGW64__) or defined(__MINGW32__) )
 EGLImageKHR eglCreateImageKHR(EGLDisplay dpy, EGLContext ctx, EGLenum target, EGLClientBuffer buffer, const EGLint *attrib_list) __attribute__((weak)); // May not be in libEGL symbol table, resolve manually :(
 EGLImageKHR eglCreateImageKHR(EGLDisplay dpy, EGLContext ctx, EGLenum target, EGLClientBuffer buffer, const EGLint *attrib_list)
 {

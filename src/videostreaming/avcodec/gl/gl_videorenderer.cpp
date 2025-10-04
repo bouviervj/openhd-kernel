@@ -267,10 +267,18 @@ bool GL_VideoRenderer::update_texture_egl_external(AVFrame* frame) {
 	}
   }
   *a = EGL_NONE;
+#if not ( defined(_WIN32) or defined(__MINGW64__) or defined(__MINGW32__) )
   const EGLImage image = eglCreateImageKHR(egl_display,
 										   EGL_NO_CONTEXT,
 										   EGL_LINUX_DMA_BUF_EXT,
 										   NULL, attribs);
+#else 
+    const EGLImage image = eglCreateImage(egl_display,
+										   EGL_NO_CONTEXT,
+										   EGL_LINUX_DMA_BUF_EXT,
+										   NULL, (EGLAttrib*) attribs);
+
+#endif
   if (!image) {
 	printf("Failed to create EGLImage %s\n", strerror(errno));
 	egl_frame_texture.has_valid_image= false;
@@ -285,10 +293,17 @@ bool GL_VideoRenderer::update_texture_egl_external(AVFrame* frame) {
   glBindTexture(GL_TEXTURE_EXTERNAL_OES, egl_frame_texture.texture);
   glTexParameteri(GL_TEXTURE_EXTERNAL_OES, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
   glTexParameteri(GL_TEXTURE_EXTERNAL_OES, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+
+#if not ( defined(_WIN32) or defined(__MINGW64__) or defined(__MINGW32__) )
   glEGLImageTargetTexture2DOES(GL_TEXTURE_EXTERNAL_OES, image);
+#endif
   // I do not know exactly how that works, but we seem to be able to immediately delete the EGL image, as long as we don't give the frame
   // back to the decoder I assume
+#if not ( defined(_WIN32) or defined(__MINGW64__) or defined(__MINGW32__) )
   eglDestroyImageKHR(egl_display, image);
+#else
+  eglDestroyImage(egl_display, image);
+#endif
   egl_frame_texture.has_valid_image= true;
   return true;
 }

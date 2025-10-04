@@ -10,7 +10,6 @@
 #include <vector>
 #include <string>
 
-
 #include "../../tutil/mavlink_include.h"
 
 class XParam

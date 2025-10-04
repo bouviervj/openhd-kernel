@@ -16,12 +16,22 @@ SDL_GLContext glContext;
 void open_sdl2_window(){
     SDL_Init(SDL_INIT_VIDEO);
 
-    SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 3); // For OpenGL ES 3.0
+    //SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 3); // For OpenGL ES 3.0
+    SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 3);
     SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 0);
     SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_ES); // Specify OpenGL ES profile
     // Other attributes like depth buffer, stencil buffer, etc. can also be set here
     SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
     //SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, 24);
+
+
+    // Here I'm using angle on Windows, which provides OpenGL ES support
+    // Place the angle dlls (libEGL.dll, libGLESv2.dll) in the same folder as your executable
+#if defined(_WIN32) or defined(__MINGW64__) or defined(__MINGW32__)
+    // For OpenGL ES, we might need to set specific hints
+    SDL_SetHint(SDL_HINT_RENDER_DRIVER, "opengles");
+    SDL_SetHint(SDL_HINT_OPENGL_ES_DRIVER, "1");
+#endif
 
     window = SDL_CreateWindow("SDL2 OpenHD Client Window",
                                 SDL_WINDOWPOS_UNDEFINED,
@@ -44,7 +54,10 @@ void close_sdl2_window(){
     SDL_Quit();
 }
 
-int main() {
+const int TARGET_FPS = 30;
+const int FRAME_DELAY_MS = 1000 / TARGET_FPS; // ~33ms
+
+int main(int argc, char *argv[]){
 
     open_sdl2_window();
 
@@ -64,8 +77,15 @@ int main() {
 
     // Application loop
     bool running = true;
+
+    Uint32 frameStart;
+    Uint32 frameTime;
+
     SDL_Event event;
     while (running) {
+
+        frameStart = SDL_GetTicks();
+
         while (SDL_PollEvent(&event)) {
             if (event.type == SDL_QUIT) {
                 running = false;
@@ -77,6 +97,13 @@ int main() {
         glViewport(0, 0, viewportSize.width, viewportSize.height);
 
         TextureRenderer::instance().paint(0);
+
+        // --- FPS Limiter ---
+        frameTime = SDL_GetTicks() - frameStart; // Calculate how long the frame took
+
+        if (frameTime < FRAME_DELAY_MS) {
+            SDL_Delay(FRAME_DELAY_MS - frameTime); // Wait for the remaining time
+        }
 
         SDL_GL_SwapWindow(window);
     }

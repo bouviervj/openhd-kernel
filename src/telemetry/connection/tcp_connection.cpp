@@ -1,11 +1,12 @@
 #include "tcp_connection.h"
 #include "tutil/qopenhdmavlinkhelper.hpp"
 
-#ifdef _WIN32
-#define _WIN32_WINNT 0x0600 // Windows Vista and above
+#if defined(_WIN32) or defined(__MINGW64__) or defined(__MINGW32__)
+//#define _WIN32_WINNT 0x0600 // Windows Vista and above
+#define WIN32_LEAN_AND_MEAN
+#include <windows.h>
 #include <winsock2.h>
-#include <Ws2tcpip.h>
-#include <Windows.h>
+#include <ws2tcpip.h>
 #pragma comment(lib, "Ws2_32.lib")
 #else
 #include <arpa/inet.h>

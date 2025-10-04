@@ -1,10 +1,12 @@
 #include "udp_connection.h"
 #include "tutil/qopenhdmavlinkhelper.hpp"
 
-#ifdef __windows__
+#if defined(_WIN32) or defined(__MINGW64__) or defined(__MINGW32__)
 #define _WIN32_WINNT 0x0600 //TODO dirty
+#define WIN32_LEAN_AND_MEAN
+#include <windows.h>
 #include <winsock2.h>
-#include <Ws2tcpip.h> // For InetPton
+#include <ws2tcpip.h> // For InetPton
 #else
 #include <arpa/inet.h>
 #include <netinet/in.h>
@@ -50,7 +52,7 @@ void UDPConnection::stop_looping()
     assert(m_receive_thread!=nullptr);
     std::cout << "UDP stop - begin" << std::endl;
     m_keep_receiving=false;
-#ifdef __windows__
+ #if defined(_WIN32) or defined(__MINGW64__) or defined(__MINGW32__)
     shutdown(m_socket_fd, SD_BOTH);
 
     closesocket(m_socket_fd);
@@ -140,7 +142,7 @@ void UDPConnection::loop_receive()
 
 bool UDPConnection::setup_socket()
 {
-#ifdef __windows__
+#if defined(_WIN32) or defined(__MINGW64__) or defined(__MINGW32__)
     WSADATA wsa;
     if (WSAStartup(MAKEWORD(2, 2), &wsa) != 0) {
     std::cout << "Error: Winsock failed, error: " << WSAGetLastError() << std::endl;
