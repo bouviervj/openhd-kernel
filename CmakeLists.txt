@@ -1,0 +1,13 @@
+cmake_minimum_required(VERSION 3.24)
+
+project(open_client_core LANGUAGES CXX)
+
+# For SDL2
+find_package(SDL2 REQUIRED) 
+
+add_subdirectory(lib/geodesic)
+add_subdirectory(lib/h264)
+add_subdirectory(src)
+
+add_executable(${PROJECT_NAME} main.cpp)
+target_link_libraries(${PROJECT_NAME} PRIVATE openhd_client_core_lib  ${SDL2_LIBRARIES})

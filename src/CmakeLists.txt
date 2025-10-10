@@ -1,0 +1,11 @@
+
+add_subdirectory(common)
+add_subdirectory(logging)
+add_subdirectory(settings)
+add_subdirectory(telemetry)
+add_subdirectory(util)
+add_subdirectory(videostreaming)
+
+add_library(openhd_client_core_lib INTERFACE)
+target_link_libraries(openhd_client_core_lib INTERFACE settings_lib  util_lib telemetry_lib videostreaming_lib h264_lib logging_lib common_lib)
+target_include_directories(openhd_client_core_lib INTERFACE ./ videostreaming/)

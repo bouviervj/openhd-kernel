@@ -1,3 +1,4 @@
-buildir
+build*
+android*
 .vscode
 .DS_Store
